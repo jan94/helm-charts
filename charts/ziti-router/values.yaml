@@ -3,7 +3,7 @@ ctrl:
   # -- required control plane endpoint
   endpoint: # ctrl.example.com:6262
 
-# -- Explicit proxy setting in the router configuration. Router can be deployed in a site 
+# -- Explicit proxy setting in the router configuration. Router can be deployed in a site
 # where all egress traffic is forwarded through an explicit proxy.
 # The enrollment will also be forwarded through the proxy.
 proxy: {}
@@ -37,7 +37,7 @@ csr:
 # -- set name to value in containers' environment
 env:
   # SOME_ENV: "true"
-  
+
 
 # listen for router links
 linkListeners:
@@ -126,6 +126,19 @@ execMountDir:     /usr/local/bin
 enrollJwtFile: enrollment.jwt
 # -- enrollment one time token from the controller's management API
 enrollmentJwt:
+# -- allow for using a secret to specify the enrollment token instead of using the enrollmentJwt field
+# if enabled, setting the enrollment token on the enrollmentJwt field has no effect
+enrollmentJwtFromSecret: false
+# -- set the enrollment jwt from a secret
+# The enrollment token secret must be of the following format:
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: myEnrollmentJwtSecret
+# type: Opaque
+# data:
+#   enrollmentJwt:
+enrollmentJwtSecretName: ""
 # -- read-only mountpoint for router identity secret specified in deployment for use by router run container
 identityMountDir: /etc/ziti/identity
 # -- writeable mountpoint where read-only config file is projected to allow router
@@ -183,10 +196,10 @@ additionalVolumes: []
 #    attributes: volumeAttributes
 #    mountPath: /path/to/mount/3
 #  - name: additional-volume-4
-#    volumeType: emptyDir 
+#    volumeType: emptyDir
 #    mountPath: /path/to/mount/4
 #  - name: additional-volume-5
-#    volumeType: hostPath 
+#    volumeType: hostPath
 #    behavior: DirectoryOrCreate
 #    mountPath: /path/to/mount/4
 #
@@ -268,7 +281,7 @@ persistence:
   volumeName:
   # -- PVC access mode: ReadWriteOnce (concurrent mounts not allowed), ReadWriteMany (concurrent allowed)
   accessMode: ReadWriteOnce
-  # -- 50Mi is plenty for this state file 
+  # -- 50Mi is plenty for this state file
   size: 50Mi
 fabric:
   metrics:
